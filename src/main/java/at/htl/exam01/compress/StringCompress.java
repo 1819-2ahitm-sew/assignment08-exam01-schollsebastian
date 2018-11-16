@@ -42,8 +42,17 @@ public class StringCompress {
      */
     public String[] readFromFile(String fileName) {
 
+        StringBuilder sb = new StringBuilder();
 
-        return null;
+        try (Scanner scanner = new Scanner(new FileReader(fileName))) { // Initialisierung eines Scanners, der Dokumente einlesen kann
+            while (scanner.hasNextLine()) { // Während das Dokument eine nächste Zeile hat,
+                sb.append(scanner.nextLine() + "\n"); // wird diese an sb angehängt
+            }
+        } catch (FileNotFoundException e) {
+            System.err.println(e.getMessage());
+        }
+
+        return sb.toString().split("\n"); // sb wird in einen String umgewandelt. Dieser wird beim Zeichen '\n' getrennt und das resultierende Array wird zurückgegeben.
     }
 
 
@@ -55,6 +64,18 @@ public class StringCompress {
      */
     public void print(String[] lines) {
 
+        for (int i = 0; i < lines.length; i++) { // Das ganze Array lines wird durchlaufen
+
+            int number = Integer.valueOf(lines[i].substring(1)); // Alle Zeichen von lines[i] außer dem Ersten werden in einer int-Variable gespeichert
+
+            for (int j = 0; j < number; j++) {
+                System.out.print(lines[i].charAt(0)); // Der erste char in lines[i] wird ausgegeben
+            }
+
+            System.out.println(); // Nach einer Zeile an Buchstaben wird ein Zeilenumbruch ausgegeben
+
+        }
+
     }
 
     /**
@@ -63,9 +84,20 @@ public class StringCompress {
      * @param fileName
      * @return Anzahl der Zeilen in der Textdatei
      */
+    //todo: Der Verwendete Lösungsweg benötigt keine getNoOfLines-Methode
+    /*
     public int getNoOfLines(String fileName) {
 
+        int lines = 0;
 
-        return -1;
-    }
+        try (Scanner scanner = new Scanner(new FileReader(fileName))) {
+            while (scanner.hasNextLine()) {
+                lines++;
+            }
+        } catch (FileNotFoundException e) {
+            System.err.println(e.getMessage());
+        }
+
+        return lines;
+    }*/
 }
